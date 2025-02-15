@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Carta Interactiva</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+        }
+        .image-container {
+            position: relative;
+        }
+        .image-container img {
+            width: 100%;
+            height: auto;
+        }
+        .hidden-button {
+            position: absolute;
+            background: transparent;
+            border: none;
+            width: 80px;
+            height: 80px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+        }
+        #seal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+            width: 80%;
+            height: auto;
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+        }
+        .falling {
+            transform: translateX(-50%) translateY(100vh) rotate(20deg);
+            opacity: 0;
+        }
+        #imagen4 {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40%;
+            height: auto;
+            z-index: 3;
+            resize: both;
+            overflow: auto;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.5);
+        }
+    </style>
+    <script>
+        let audio = new Audio("1.mp3");
+
+        function iniciarEfecto() {
+            let seal = document.getElementById("seal");
+            let cartaImagen = document.getElementById("cartaImagen");
+            
+            audio.play();
+            seal.classList.add("falling");
+            
+            setTimeout(() => {
+                seal.style.display = "none";
+                cartaImagen.src = "2.png";
+                document.getElementById("boton1").style.display = "none";
+                document.getElementById("boton2").style.display = "block";
+            }, 500);
+        }
+
+        function cambiarImagen(nuevaImagen, botonOcultar, botonMostrar) {
+            let imagen = document.getElementById("cartaImagen");
+            imagen.src = nuevaImagen;
+            document.getElementById(botonOcultar).style.display = "none";
+            document.getElementById(botonMostrar).style.display = "block";
+        }
+
+        function mostrarImagen4() {
+            document.getElementById("imagen4").style.display = "block";
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="image-container">
+            <img id="cartaImagen" src="2.png" alt="Carta Interactiva">
+            <img id="seal" src="seal.png" alt="Sello">
+            <button id="boton1" class="hidden-button" onclick="iniciarEfecto()"></button>
+            <button id="boton2" class="hidden-button" onclick="cambiarImagen('3.png', 'boton2', 'boton3')" style="display: none;"></button>
+            <button id="boton3" class="hidden-button" onclick="mostrarImagen4()" style="display: none;"></button>
+        </div>
+        <img id="imagen4" src="4.png" alt="Imagen en Grande">
+    </div>
+</body>
+</html>
